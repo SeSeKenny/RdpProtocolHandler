@@ -34,6 +34,7 @@ As of now only only 'full address', and 'username' have been implemented
 Because Microsoft has decided not to update mstsc.exe to handle these things natively, the coding methods are described below.
 
 "full address" = "/v blah.blah" passed as argument to mstsc.exe
+
 "username" = parsed and sent to the per user registry keys that deal with username hints
 
 ## RDP Protocol Handler parameters
