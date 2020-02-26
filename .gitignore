@@ -6,3 +6,5 @@
 /RdpProtocolHandler/bin
 /RdpProtocolHandler/obj
 /.vs
+/RdpProctocolHandlerSetup/Release
+/RdpProctocolHandlerSetup/Debug

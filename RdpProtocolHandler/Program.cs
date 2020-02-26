@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
+using System.Web;
 using Microsoft.Win32;
 using NLog;
 using NLog.Config;
@@ -91,14 +93,24 @@ namespace KonradSikorski.Tools.RdpProtocolHandler
         {
             Log.Debug("Start RDP: " + parameter);
 
-            var uri = parameter.Substring("rdp://".Length).TrimEnd('/');
-            var rdpParameters = uri.Split(',');
+            var encodedUri = parameter.Substring("rdp://".Length).TrimEnd('/');
+            string uri = HttpUtility.UrlDecode(encodedUri);
+            var splitRdpParameters = uri.Split('&');
 
-            rdpParameters[0] = $"/v:{rdpParameters[0]}";
-            for (int i = 1; i < rdpParameters.Length; i++)
+            var rdpParameters = new List<string>();
+
+            var addressLookup = "full address=s:";
+            var fullAddress=splitRdpParameters.Where(rparam => rparam.StartsWith(addressLookup)).FirstOrDefault().Substring(addressLookup.Length);
+            if (fullAddress.Length > 0) {
+                rdpParameters.Add($"/v:{fullAddress}");
+            }
+
+            var userNameLookup = "username=s:";
+            var userName = splitRdpParameters.Where(rparam => rparam.StartsWith(userNameLookup)).FirstOrDefault().Substring(userNameLookup.Length);
+            if (userNameLookup.Length > 0 && fullAddress.Length > 0)
             {
-                var rdpParam = rdpParameters[i];
-                if (!string.IsNullOrWhiteSpace(rdpParam)) rdpParameters[i] = "/" + rdpParam;
+                RegistryKey serverKey = Registry.CurrentUser.CreateSubKey($"SOFTWARE\\Microsoft\\Terminal Server Client\\Servers\\{fullAddress}");
+                serverKey.SetValue("UsernameHint", userName);
             }
 
             var rdpParametersChain = string.Join(" ", rdpParameters);

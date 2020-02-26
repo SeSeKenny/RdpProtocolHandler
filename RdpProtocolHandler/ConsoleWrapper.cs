@@ -44,8 +44,8 @@ namespace KonradSikorski.Tools.RdpProtocolHandler
         {
             if (!Initialized) return;
 
-            Console.WriteLine("Press any key to close...");
-            Console.ReadKey();
+            // Console.WriteLine("Press any key to close...");
+            // Console.ReadKey();
         }
     }
 }
