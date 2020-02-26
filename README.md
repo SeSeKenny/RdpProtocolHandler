@@ -25,7 +25,7 @@ After installation do not move the `.exe` file to other location. When you chang
 Just open uri which start with `rdp://` using browser or any other way.
 
 ### Uri format
-The uri format used by application has been modified from original project to suite the native rdp URI scheme Microsoft has published, but for whatever reason Windows was not included.
+The uri format used by application has been modified from original project to suite the native rdp URI scheme Microsoft has published, but for whatever reason Windows was not included for support.
 
 https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/remote-desktop-uri
 
@@ -58,4 +58,4 @@ The app logs its usages to file using [NLog](http://nlog-project.org). By defaul
 
 
 ## Credit
-Huge shoutout to original dev, original source found https://github.com/konradsikorski/RdpProtocolHandler/releases
+Huge shoutout to original dev, original source found https://github.com/konradsikorski/RdpProtocolHandler
